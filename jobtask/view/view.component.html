@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <div class="modal-title">查看 {{ record.username }} 信息</div>
+</div>
+<nz-spin *ngIf="!form" class="modal-spin"></nz-spin>
+<desc-list *ngIf="form">
+  <desc-list-item term="任务名">{{ form.name }}</desc-list-item>
+  <desc-list-item term="任务组">{{ form.group }}</desc-list-item>
+  <desc-list-item term="类名">{{ form.className }}</desc-list-item>
+  <desc-list-item term="任务描述" *ngIf="form.taskDescription">{{ form.taskDescription }}</desc-list-item>
+  <desc-list-item term="触发器描述" *ngIf="form.triggerDescription">{{ form.triggerDescription }}</desc-list-item>
+  <desc-list-item *ngFor="let data of form.dataKeys; let i=index" term="任务参数">
+    键：{{ form.dataKeys[i] }} &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 值：{{ form.dataValues[i] }}
+  </desc-list-item>
+</desc-list>
+
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">关闭</button>
+</div>

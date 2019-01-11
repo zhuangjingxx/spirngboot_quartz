@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hgsoft.ecip.quartz.mapper.QrtzJobandtriggerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hgsoft.ecip.quartz.entity.QrtzJobandtrigger">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="groupName" property="groupName" />
+        <result column="className" property="className" />
+        <result column="taskDescription" property="taskDescription" />
+        <result column="cronExpression" property="cronExpression" />
+        <result column="configSel" property="configSel" />
+        <result column="oneTimeExecTime" property="oneTimeExecTime" />
+        <result column="secondTypeSel" property="secondTypeSel" />
+        <result column="minuteTypeSel" property="minuteTypeSel" />
+        <result column="hourTypeSel" property="hourTypeSel" />
+        <result column="dayTypeSel" property="dayTypeSel" />
+        <result column="monthTypeSel" property="monthTypeSel" />
+        <result column="weekTypeSel" property="weekTypeSel" />
+        <result column="startTime" property="startTime" />
+        <result column="hasEndTime" property="hasEndTime" />
+        <result column="endTime" property="endTime" />
+        <result column="status" property="status" />
+        <result column="triggerDescription" property="triggerDescription" />
+        <result column="created_at" property="createdAt" />
+        <result column="deleted_at" property="deletedAt" />
+        <result column="lasttime" property="lasttime" />
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="jobAndTriggerModel" type="com.hgsoft.ecip.quartz.model.JobAndTriggerModel">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="groupName" property="groupName" />
+        <result column="className" property="className" />
+        <result column="taskDescription" property="taskDescription" />
+        <result column="cronExpression" property="cronExpression" />
+        <result column="configSel" property="configSel" />
+        <result column="oneTimeExecTime" property="oneTimeExecTime" />
+        <result column="secondTypeSel" property="secondTypeSel" />
+        <result column="minuteTypeSel" property="minuteTypeSel" />
+        <result column="hourTypeSel" property="hourTypeSel" />
+        <result column="dayTypeSel" property="dayTypeSel" />
+        <result column="monthTypeSel" property="monthTypeSel" />
+        <result column="weekTypeSel" property="weekTypeSel" />
+        <result column="startTime" property="startTime" />
+        <result column="hasEndTime" property="hasEndTime" />
+        <result column="endTime" property="endTime" />
+        <result column="status" property="status" />
+        <result column="triggerDescription" property="triggerDescription" />
+        <result column="created_at" property="createdAt" />
+        <result column="deleted_at" property="deletedAt" />
+        <result column="lasttime" property="lasttime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, groupName, className, taskDescription, cronExpression, configSel, oneTimeExecTime, secondTypeSel, minuteTypeSel, hourTypeSel, dayTypeSel, monthTypeSel, weekTypeSel, startTime, hasEndTime, endTime, status, triggerDescription, created_at, deleted_at, lasttime
+    </sql>
+
+    <select id="findJobAndTriggerModel" resultMap="jobAndTriggerModel" parameterType="integer">
+        select <include refid="Base_Column_List"></include> from qrtz_jobAndTrigger where id = #{id}
+    </select>
+    <select id="findJobAndTriggerByJodKey" resultType="com.hgsoft.ecip.quartz.entity.QrtzJobandtrigger" parameterType="string">
+        select <include refid="Base_Column_List"></include> from qrtz_jobAndTrigger
+        <where>
+            <if test="name != null">
+                name like CONCAT(CONCAT('%', #{name}),'%')
+            </if>
+            <if test="groupName != null ">
+                and groupName like CONCAT(CONCAT('%', #{groupName}),'%')
+            </if>
+            <if test="true">
+                and status != 0
+            </if>
+        </where>
+    </select>
+
+</mapper>

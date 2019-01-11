@@ -1,0 +1,1024 @@
+<!--<form nz-form [formGroup]="jobtaskForm" (ngSubmit)="submit()">-->
+  <!--<nz-form-item>-->
+    <!--<nz-form-label nzFor="name" nzSpan="4" nzRequired>任务名称</nz-form-label>-->
+    <!--<nz-form-control nzSpan="18" nzOffset="1">-->
+      <!--<input nz-input formControlName="name" id="name"/>-->
+      <!--<nz-form-explain-->
+        <!--*ngIf="this.jobtaskForm.get('name').dirty && jobtaskForm.get('name').errors && jobtaskForm.get('name').errors['required']">-->
+        <!--请输入任务名称-->
+      <!--</nz-form-explain>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--<nz-form-item>-->
+    <!--<nz-form-label nzFor="group" nzSpan="4" nzRequired>任务组</nz-form-label>-->
+    <!--<nz-form-control nzSpan="18" nzOffset="1">-->
+      <!--<input nz-input formControlName="group" id="group"/>-->
+      <!--<nz-form-explain-->
+        <!--*ngIf="this.jobtaskForm.get('group').dirty && jobtaskForm.get('group').errors && jobtaskForm.get('group').errors['required']">-->
+        <!--请输入任务组-->
+      <!--</nz-form-explain>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--<nz-form-item>-->
+    <!--<nz-form-label nzFor="className" nzSpan="4" nzRequired>完整类名</nz-form-label>-->
+    <!--<nz-form-control nzSpan="18" nzOffset="1">-->
+      <!--<input nz-input formControlName="className" id="className"/>-->
+      <!--<nz-form-explain-->
+        <!--*ngIf="this.jobtaskForm.get('className').dirty && this.jobtaskForm.get('className') && this.jobtaskForm.get('className').errors ">-->
+        <!--请输入完整类名-->
+      <!--</nz-form-explain>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+
+  <!--<nz-form-item>-->
+    <!--<nz-form-label nzFor="description" nzSpan="4">任务描述</nz-form-label>-->
+    <!--<nz-form-control nzSpan="18" nzOffset="1">-->
+      <!--<textarea nz-input formControlName="description" [nzAutosize]="{minRows:3,maxRows:10} ">-->
+      <!--</textarea>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--<nz-form-item>-->
+    <!--<nz-form-control nzOffset="2">-->
+      <!--<button nz-button nzType="primary" (click)="optionChange($event)">切换表达式</button>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+
+  <!--<div *ngIf="taskCronShowFlag">-->
+    <!--<nz-form-item id="cronExpressionItem">-->
+      <!--<nz-form-label nzFor="cronExpression" nzSpan="4" nzRequired>cron表达式</nz-form-label>-->
+      <!--<nz-form-control nzSpan="10" nzOffset="1">-->
+        <!--<input nz-input formControlName="cronExpression" id="cronExpression"/>-->
+        <!--<nz-form-explain-->
+          <!--*ngIf="jobtaskForm.get('cronExpression').dirty && jobtaskForm.get('cronExpression').errors && jobtaskForm.get('cronExpression').errors['required']">-->
+          <!--请输入cron表达式-->
+        <!--</nz-form-explain>-->
+      <!--</nz-form-control>-->
+      <!--<nz-form-control nzSpan="4" nzOffset="1">-->
+        <!--<button nz-button nzType="primary" (click)="cronHelp($event)">表达式(cron)说明</button>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item id="cronExpExplainLabelItem" *ngIf="cronExpHelpShowFlag">-->
+      <!--<nz-form-label nzFor="cronDescription" nzSpan="4" nzOffset="1">表达式(cron)说明</nz-form-label>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item id="cronExpHelpItem" *ngIf="cronExpHelpShowFlag" style="border: crimson solid 1px">-->
+      <!--<nz-form-control nzOffset="1">-->
+        <!--<span style="color: red;">格式: [秒] [分] [小时] [日] [月] [周]</span><br/> <span-->
+        <!--style="color: red;">取值范围：</span><br/>-->
+        <!--&nbsp; &nbsp;[秒]&nbsp; 0-59 , - * / <br/> &nbsp;-->
+        <!--&nbsp;[分]&nbsp; 0-59 , - * / <br/> &nbsp;-->
+        <!--&nbsp;[小时]&nbsp; 0-23 , - * / <br/> &nbsp;-->
+        <!--&nbsp;[日]&nbsp; 1-31 , - * ? / L W <br/> &nbsp;-->
+        <!--&nbsp;[月]&nbsp; 1-12 or JAN-DEC , - * / <br/> &nbsp;-->
+        <!--&nbsp;[周]&nbsp; 1-7 or SUN-SAT , - * ? / L # <br/> <span-->
+        <!--style="color: red;">通配符说明:</span><br/> &nbsp; &nbsp;[*]-->
+        <!--&nbsp;表示所有值. 例如:在分的字段上设置 "*",表示每一分钟都会触发。<br/> &nbsp;-->
+        <!--&nbsp;[?]-->
+        <!--&nbsp;表示不指定值。使用的场景为不需要关心当前设置这个字段的值。例如:要在每月的10号触发一个操作，但不关心是周几，所以需要周位置的那个字段设置为"?"-->
+        <!--具体设置为 0 0 0 10 * ?<br/> &nbsp; &nbsp;[-] &nbsp;表示区间。例如-->
+        <!--在小时上设置 "10-12",表示 10,11,12点都会触发。<br/> &nbsp; &nbsp;[,]-->
+        <!--&nbsp;表示指定多个值。例如在周字段上设置 "MON,WED,FRI" 表示周一，周三和周五触发<br/>-->
+        <!--&nbsp; &nbsp;[/] &nbsp;用于递增触发。如在秒上面设置"5/15"-->
+        <!--表示从5秒开始，每增15秒触发(5,20,35,50)。-->
+        <!--在月字段上设置'1/3'所示每月1号开始，每隔三天触发一次。<br/> &nbsp; &nbsp;[L]-->
+        <!--&nbsp;表示最后的意思。在日字段设置上，表示当月的最后一天(依据当前月份，如果是二月还会依据是否是润年[leap]),<br/> &nbsp;&nbsp; &nbsp;&nbsp;-->
+        <!--&nbsp;-->
+        <!--在周字段上表示星期六，相当于"7"或"SAT"。如果在"L"前加上数字，则表示该数据的最后一个。例如在周字段上设置"6L"这样的格式,则表示“本月最后一个星期五"-->
+        <!--<br/> &nbsp; &nbsp;[W] &nbsp;表示离指定日期的最近那个工作日(周一至周五).-->
+        <!--例如在日字段上设置"15W"，表示离每月15号最近的那个工作日触发。如果15号正好是周六，则找最近的周五(14号)触发,-->
+        <!--如果15号是周未，则找最近的下周一(16号)触发.<br/> &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;如果15号正好在工作日(周一至周五)，则就在该天触发。如果指定格式为-->
+        <!--"1W",它则表示每月1号往后最近的工作日触发。如果1号正是周六，则将在3号下周一触发。<br/>-->
+        <!--&nbsp; &nbsp;[#]-->
+        <!--&nbsp;表示序号(每月的第几个周几)。例如在周字段上设置"6#3"表示在每月的第三个周六.注意如果指定"#5",正好第五周没有周六，则不会触发该配置。-->
+        <!--<br/>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item id="triggerDescriptionItem">-->
+      <!--<nz-form-label nzFor="triggerDescription" nzSpan="4">触发器描述</nz-form-label>-->
+      <!--<nz-form-control nzSpan="18" nzOffset="1">-->
+        <!--<input nz-input formControlName="triggerDescription" id="triggerDescription"/>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+  <!--</div>-->
+
+  <!--<div id="taskDetailSel" *ngIf="taskDetailShowFlag">-->
+    <!--<nz-form-item>-->
+      <!--<nz-form-label nzFor="taskTypeSel" nzSpan="4" nzRequired>计划类型</nz-form-label>-->
+      <!--<nz-form-control nzSpan="4" nzOffset="1">-->
+        <!--<nz-select formControlName="taskTypeSel" id="taskTypeSel" (ngModelChange)="taskTypeSelChange($event)"-->
+                   <!--nzPlaceHolder="请选择">-->
+          <!--<nz-option nzValue="1" nzLabel="重复执行"></nz-option>-->
+          <!--<nz-option nzValue="2" nzLabel="执行一次"></nz-option>-->
+        <!--</nz-select>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item>-->
+      <!--<nz-form-control nzSpan="18" nzOffset="5">-->
+        <!--<nz-tabset>-->
+          <!--<nz-tab nzTitle="秒">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label nzSpan="3">选择类型</nz-form-label>-->
+              <!--<nz-form-control nzSpan="12" nzOffset="1">-->
+                <!--<nz-select formControlName="secondTypeSel"  (ngModelChange)="secondTypeSelChange($event)"-->
+                           <!--nzPlaceHolder="请选择">-->
+                  <!--<nz-option nzValue="1" nzLabel="每秒执行"></nz-option>-->
+                  <!--<nz-option nzValue="2" nzLabel="周期从第几秒到第几秒"></nz-option>-->
+                  <!--<nz-option nzValue="3" nzLabel="从某一秒开始秒，每多少秒执行一次"></nz-option>-->
+                  <!--<nz-option nzValue="4" nzLabel="指定特定的秒数"></nz-option>-->
+                <!--</nz-select>-->
+              <!--</nz-form-control>-->
+            <!--</nz-form-item>-->
+          <!--</nz-tab>-->
+          <!--<nz-tab nzTitle="分钟">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label>第二个</nz-form-label>-->
+            <!--</nz-form-item>-->
+          <!--</nz-tab>-->
+          <!--<nz-tab nzTitle="小时">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label>第三个</nz-form-label>-->
+            <!--</nz-form-item>-->
+          <!--</nz-tab>-->
+          <!--<nz-tab nzTitle="日">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label>第三个</nz-form-label>-->
+            <!--</nz-form-item>-->
+          <!--</nz-tab>-->
+          <!--<nz-tab nzTitle="月">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label>第三个</nz-form-label>-->
+            <!--</nz-form-item>-->
+          <!--</nz-tab>-->
+          <!--<nz-tab nzTitle="周">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label>第三个</nz-form-label>-->
+            <!--</nz-form-item>-->
+          <!--</nz-tab>-->
+        <!--</nz-tabset>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="monthValItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4">指定执行的月份</nz-form-label>-->
+      <!--<nz-form-control nzSpan="4" nzOffset="1">-->
+        <!--<label nz-checkbox formControlName="allChecked" (ngModelChange)="updateAllChecked()">-->
+          <!--全选-->
+        <!--</label>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="monthValItemShowFlag">-->
+      <!--<nz-form-control nzOffset="5">-->
+        <!--<nz-checkbox-group [ngModel]="monthValArray1" formControlName="monthVals1"-->
+                           <!--(ngModelChange)="updateSingleChecked()"></nz-checkbox-group>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="monthValItemShowFlag">-->
+      <!--<nz-form-control nzOffset="5">-->
+        <!--<nz-checkbox-group [ngModel]="monthValArray2" formControlName="monthVals2"-->
+                           <!--(ngModelChange)="updateSingleChecked()"></nz-checkbox-group>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="taskDateItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzFor="taskDate" nzRequired>执行的日期</nz-form-label>-->
+      <!--<nz-form-control nzSpan="5" nzOffset="1">-->
+        <!--<nz-date-picker formControlName="taskDate" id="taskDate"></nz-date-picker>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="taskDateItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzFor="taskTime" nzRequired>执行的时间</nz-form-label>-->
+      <!--<nz-form-control nzSpan="5" nzOffset="1">-->
+        <!--<nz-time-picker formControlName="taskTime" id="taskTime"></nz-time-picker>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="taskRateSelectItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzRequired>执行频率</nz-form-label>-->
+      <!--<nz-form-control nzSpan="7" nzOffset="1">-->
+        <!--<nz-select formControlName="taskRateSel" id="taskRateSel" (ngModelChange)="taskRateSelChange($event)"-->
+                   <!--nzPlaceHolder="请选择">-->
+          <!--<nz-option nzValue="day" nzLabel="按每天来执行任务"></nz-option>-->
+          <!--<nz-option nzValue="week" nzLabel="按每周来执行任务"></nz-option>-->
+          <!--<nz-option nzValue="monthWeek" nzLabel="按每月的第几个星期几"></nz-option>-->
+          <!--<nz-option nzValue="monthDay" nzLabel="按每月的某几天"></nz-option>-->
+        <!--</nz-select>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="weekTimeSelectItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzFor="weekTimesVal" nzRequired>执行间隔为</nz-form-label>-->
+      <!--<nz-form-control nzOffset="1" nzSpan="16">-->
+        <!--<nz-checkbox-group formControlName="weekTimesVal" [ngModel]="weekTimesValArray">-->
+        <!--</nz-checkbox-group>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="monthTimeSelectItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzRequired>在</nz-form-label>-->
+      <!--<nz-form-control nzSpan="6" nzOffset="1">-->
+        <!--<nz-select formControlName="monthFrontSel" id="monthFrontSel" nzPlaceHolder="请选择">-->
+          <!--<nz-option nzValue="1" nzLabel="第一个"></nz-option>-->
+          <!--<nz-option nzValue="2" nzLabel="第二个"></nz-option>-->
+          <!--<nz-option nzValue="3" nzLabel="第三个"></nz-option>-->
+          <!--<nz-option nzValue="4" nzLabel="第四个"></nz-option>-->
+          <!--<nz-option nzValue="L" nzLabel="最后一个"></nz-option>-->
+        <!--</nz-select>-->
+      <!--</nz-form-control>-->
+      <!--<nz-form-control nzSpan="6" nzOffset="1">-->
+        <!--<nz-select formControlName="monthBackSel" id="monthBackSel" nzPlaceHolder="请选择">-->
+          <!--<nz-option nzValue="1" nzLabel="星期日"></nz-option>-->
+          <!--<nz-option nzValue="2" nzLabel="星期一"></nz-option>-->
+          <!--<nz-option nzValue="3" nzLabel="星期二"></nz-option>-->
+          <!--<nz-option nzValue="4" nzLabel="星期三"></nz-option>-->
+          <!--<nz-option nzValue="5" nzLabel="星期四"></nz-option>-->
+          <!--<nz-option nzValue="6" nzLabel="星期五"></nz-option>-->
+          <!--<nz-option nzValue="7" nzLabel="星期六"></nz-option>-->
+        <!--</nz-select>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--&lt;!&ndash;<nz-form-item *ngIf="monthDaysValItemShowFlag">&ndash;&gt;-->
+    <!--&lt;!&ndash;<nz-form-label nzRequired nzSpan="4">指定日期</nz-form-label>&ndash;&gt;-->
+    <!--&lt;!&ndash;<nz-form-control>&ndash;&gt;-->
+    <!--&lt;!&ndash;<nz-checkbox-group formControlName="monthDaysVal1" [ngModel]="monthDaysValArray1"></nz-checkbox-group>&ndash;&gt;-->
+    <!--&lt;!&ndash;</nz-form-control>&ndash;&gt;-->
+    <!--&lt;!&ndash;</nz-form-item>&ndash;&gt;-->
+    <!--<nz-form-item *ngIf="taskRateDaySelItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzRequired>每天频率</nz-form-label>-->
+      <!--<nz-form-control nzOffset="1" nzSpan="4">-->
+        <!--<nz-select formControlName="taskRateDaySel" id="taskRateDaySel" (ngModelChange)="taskRateDaySelChange($event)"-->
+                   <!--nzPlaceHolder="请选择">-->
+          <!--<nz-option nzValue="one" nzLabel="执行一次"></nz-option>-->
+          <!--<nz-option nzValue="more" nzLabel="间隔执行"></nz-option>-->
+        <!--</nz-select>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="oneTimeItemShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzRequired>执行一次时间为每天</nz-form-label>-->
+      <!--<nz-form-control nzSpan="4" nzOffset="1">-->
+        <!--<nz-time-picker formControlName="oneTime"></nz-time-picker>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item *ngIf="betweenTimeShowFlag">-->
+      <!--<nz-form-label nzSpan="4" nzRequired>执行间隔为</nz-form-label>-->
+      <!--<nz-form-label nzOffset="1" nzSpan="1">每</nz-form-label>-->
+      <!--<nz-form-control nzSpan="2">-->
+        <!--<input nz-input formControlName="betweenTimes"/>-->
+      <!--</nz-form-control>-->
+      <!--<nz-form-control nzSpan="4">-->
+        <!--<nz-select id="betweenTimeSel" formControlName="betweenTimeSel" nzPlaceHolder="请选择">-->
+          <!--<nz-option nzValue="hour" nzLabel="小时"></nz-option>-->
+          <!--<nz-option nzValue="minute" nzLabel="分钟"></nz-option>-->
+          <!--<nz-option nzValue="second" nzLabel="秒"></nz-option>-->
+        <!--</nz-select>-->
+      <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+
+  <!--</div>-->
+  <!--<nz-form-item *ngIf="taskBetweenTimeShowFlag">-->
+    <!--<nz-form-label nzSpan="4">持续时间</nz-form-label>-->
+    <!--<nz-form-label nzSpan="3" nzRequired>开始时间</nz-form-label>-->
+    <!--<nz-form-control nzSpan="3">-->
+      <!--<nz-date-picker formControlName="startDate"></nz-date-picker>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-control nzSpan="3">-->
+      <!--<nz-time-picker formControlName="startTime"></nz-time-picker>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-label nzOffset="1" nzSpan="2" [nzRequired]="this.jobtaskForm.get('hasEndTime').value">结束时间</nz-form-label>-->
+    <!--<nz-form-control nzSpan="2">-->
+      <!--<nz-switch formControlName="hasEndTime" nzCheckedChildren="有" nzUnCheckedChildren="没有"-->
+                 <!--(ngModelChange)="hasEndTimeChange()">-->
+
+      <!--</nz-switch>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-control nzSpan="3" *ngIf="endTimeShowFlag">-->
+      <!--<nz-date-picker formControlName="endDate"></nz-date-picker>-->
+    <!--</nz-form-control>-->
+
+    <!--<nz-form-control nzSpan="3" *ngIf="endTimeShowFlag">-->
+      <!--<nz-time-picker formControlName="endTime"></nz-time-picker>-->
+    <!--</nz-form-control>-->
+
+
+  <!--</nz-form-item>-->
+  <!--<nz-form-item id="taskData">-->
+    <!--<nz-form-label nzSpan="4">任务参数</nz-form-label>-->
+    <!--<nz-form-label nzSpan="1" nzOffset="1">键</nz-form-label>-->
+    <!--<nz-form-control nzSpan="4">-->
+      <!--<input nz-input formControlName="dataKey"/>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-label nzSpan="1" nzOffset="1">值</nz-form-label>-->
+    <!--<nz-form-control nzSpan="8">-->
+      <!--<input nz-input formControlName="dataValue"/>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-control nzSpan="2" nzOffset="1">-->
+      <!--<button nz-button nzType="primary" (click)="addRow($event)">新增参数</button>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--<nz-form-item *ngFor="let dataKey of dataKeys">-->
+    <!--<nz-form-label nzSpan="1" nzOffset="5">键</nz-form-label>-->
+    <!--<nz-form-control nzSpan="4">-->
+      <!--<input nz-input [formControlName]="dataKey.name"/>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-label nzSpan="1" nzOffset="1">值</nz-form-label>-->
+    <!--<nz-form-control nzSpan="8">-->
+      <!--<input nz-input [formControlName]="dataValues[dataKey.id].name"/>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-control *ngIf="dataKey.id == dataKeys.length-1" nzOffset="1" nzSpan="2">-->
+      <!--<button nz-button nzType="primary" (click)="removeRow($event)">删除参数</button>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--<nz-form-item></nz-form-item>-->
+  <!--<nz-form-item>-->
+    <!--<nz-form-control nzOffset="9" nzSpan="2">-->
+      <!--<button nz-button nzType="primary" (click)="reset($event)">重置</button>-->
+    <!--</nz-form-control>-->
+    <!--<nz-form-control nzOffset="1" nzSpan="2">-->
+      <!--<button nz-button nzType="primary">提交</button>-->
+    <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+<!--</form>-->
+
+
+<form nz-form [formGroup]="jobtaskForm" (ngSubmit)="submit()" >
+  <nz-form-item>
+    <nz-form-label nzFor="name" nzSpan="4" nzRequired>任务名称</nz-form-label>
+    <nz-form-control nzSpan="18" nzOffset="1">
+      <input nz-input formControlName="name" id="name"/>
+      <nz-form-explain
+        *ngIf="this.jobtaskForm.get('name').dirty && jobtaskForm.get('name').errors ">
+        <ng-container *ngIf="jobtaskForm.get('name').errors['required']">
+          请输入任务名称
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="group" nzSpan="4" nzRequired>任务组</nz-form-label>
+    <nz-form-control nzSpan="18" nzOffset="1">
+      <input nz-input formControlName="group" id="group"/>
+      <nz-form-explain
+        *ngIf="this.jobtaskForm.get('group').dirty && jobtaskForm.get('group').errors && jobtaskForm.get('group').errors['required']">
+        请输入任务组
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="className" nzSpan="4" nzRequired>完整类名</nz-form-label>
+    <nz-form-control nzSpan="18" nzOffset="1">
+      <input nz-input formControlName="className" id="className"/>
+      <nz-form-explain
+        *ngIf="this.jobtaskForm.get('className').dirty && this.jobtaskForm.get('className') && this.jobtaskForm.get('className').errors ">
+        请输入完整类名
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="description" nzSpan="4">任务描述</nz-form-label>
+    <nz-form-control nzSpan="18" nzOffset="1">
+<textarea nz-input formControlName="taskDescription" [nzAutosize]="{minRows:3,maxRows:10} ">
+</textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired nzSpan="4">选择配置方式</nz-form-label>
+    <nz-form-control nzOffset="1" nzSpan="8">
+      <nz-select formControlName="configSel" (ngModelChange)="configSelChange($event)" nzPlaceHolder="请选择配置方式">
+        <nz-option nzValue="1" nzLabel="执行一次配置"></nz-option>
+        <nz-option nzValue="2" nzLabel="一般界面配置"></nz-option>
+        <nz-option nzValue="3" nzLabel="直接写cron表达式配置"></nz-option>
+      </nz-select>
+      <nz-form-explain *ngIf="jobtaskForm.get('configSel').dirty && jobtaskForm.get('configSel').errors">
+        <ng-container *ngIf="jobtaskForm.get('configSel').errors['required']">
+          请选择配置方式
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div *ngIf="cronConfigDivShowFlag">
+    <nz-form-item >
+      <nz-form-label nzFor="cronExpression" nzSpan="4" nzRequired>cron表达式</nz-form-label>
+      <nz-form-control nzSpan="10" nzOffset="1">
+        <input nz-input formControlName="cronExpression" id="cronExpression"/>
+        <nz-form-explain
+          *ngIf="jobtaskForm.get('cronExpression').dirty && jobtaskForm.get('cronExpression').errors && jobtaskForm.get('cronExpression').errors['required']">
+          请输入cron表达式
+        </nz-form-explain>
+      </nz-form-control>
+      <nz-form-control nzSpan="4" nzOffset="1">
+        <button nz-button nzType="primary" (click)="cronHelp($event)">表达式(cron)说明</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item  *ngIf="cronExpHelpItemShowFlag">
+      <nz-form-label  nzSpan="4" nzOffset="1">表达式(cron)说明</nz-form-label>
+    </nz-form-item>
+    <nz-form-item id="cronExpHelpItem" *ngIf="cronExpHelpItemShowFlag" style="border: deepskyblue solid 1px">
+      <nz-form-control nzOffset="1">
+        <span style="color: red;">格式: [秒] [分] [小时] [日] [月] [周]</span><br/> <span
+        style="color: red;">取值范围：</span><br/>
+        &nbsp; &nbsp;[秒]&nbsp; 0-59 , - * / <br/> &nbsp;
+        &nbsp;[分]&nbsp; 0-59 , - * / <br/> &nbsp;
+        &nbsp;[小时]&nbsp; 0-23 , - * / <br/> &nbsp;
+        &nbsp;[日]&nbsp; 1-31 , - * ? / L W <br/> &nbsp;
+        &nbsp;[月]&nbsp; 1-12 or JAN-DEC , - * / <br/> &nbsp;
+        &nbsp;[周]&nbsp; 1-7 or SUN-SAT , - * ? / L # <br/> <span
+        style="color: red;">通配符说明:</span><br/> &nbsp; &nbsp;[*]
+        &nbsp;表示所有值. 例如:在分的字段上设置 "*",表示每一分钟都会触发。<br/> &nbsp;
+        &nbsp;[?]
+        &nbsp;表示不指定值。使用的场景为不需要关心当前设置这个字段的值。例如:要在每月的10号触发一个操作，但不关心是周几，所以需要周位置的那个字段设置为"?"
+        具体设置为 0 0 0 10 * ?<br/> &nbsp; &nbsp;[-] &nbsp;表示区间。例如
+        在小时上设置 "10-12",表示 10,11,12点都会触发。<br/> &nbsp; &nbsp;[,]
+        &nbsp;表示指定多个值。例如在周字段上设置 "MON,WED,FRI" 表示周一，周三和周五触发<br/>
+        &nbsp; &nbsp;[/] &nbsp;用于递增触发。如在秒上面设置"5/15"
+        表示从5秒开始，每增15秒触发(5,20,35,50)。
+        在月字段上设置'1/3'所示每月1号开始，每隔三天触发一次。<br/> &nbsp; &nbsp;[L]
+        &nbsp;表示最后的意思。在日字段设置上，表示当月的最后一天(依据当前月份，如果是二月还会依据是否是润年[leap]),<br/> &nbsp;&nbsp; &nbsp;&nbsp;
+        &nbsp;
+        在周字段上表示星期六，相当于"7"或"SAT"。如果在"L"前加上数字，则表示该数据的最后一个。例如在周字段上设置"6L"这样的格式,则表示“本月最后一个星期五"
+        <br/> &nbsp; &nbsp;[W] &nbsp;表示离指定日期的最近那个工作日(周一至周五).
+        例如在日字段上设置"15W"，表示离每月15号最近的那个工作日触发。如果15号正好是周六，则找最近的周五(14号)触发,
+        如果15号是周未，则找最近的下周一(16号)触发.<br/> &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;如果15号正好在工作日(周一至周五)，则就在该天触发。如果指定格式为
+        "1W",它则表示每月1号往后最近的工作日触发。如果1号正是周六，则将在3号下周一触发。<br/>
+        &nbsp; &nbsp;[#]
+        &nbsp;表示序号(每月的第几个周几)。例如在周字段上设置"6#3"表示在每月的第三个周六.注意如果指定"#5",正好第五周没有周六，则不会触发该配置。
+        <br/>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div *ngIf="oneTimeExecConfigDivShowFlag">
+    <nz-form-item >
+      <nz-form-label nzSpan="4" nzRequired>执行的日期</nz-form-label>
+      <nz-form-control nzSpan="5" nzOffset="1">
+        <nz-date-picker formControlName="oneTimeExecDate" ></nz-date-picker>
+        <nz-form-explain *ngIf="jobtaskForm.get('oneTimeExecDate').dirty && jobtaskForm.get('oneTimeExecDate').errors">
+          <ng-container *ngIf="jobtaskForm.get('oneTimeExecDate').errors['required']">
+            请输入执行日期
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+      <nz-form-label nzSpan="4" nzRequired>执行的时间</nz-form-label>
+      <nz-form-control nzSpan="5" nzOffset="1">
+        <nz-time-picker formControlName="oneTimeExecTime" ></nz-time-picker>
+        <nz-form-explain *ngIf="jobtaskForm.get('oneTimeExecTime').dirty && jobtaskForm.get('oneTimeExecTime').errors">
+          <ng-container *ngIf="jobtaskForm.get('oneTimeExecTime').errors['required']">
+            请输入执行时间
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div *ngIf="commonConfigDivShowFlag">
+    <nz-form-item>
+      <nz-form-control nzSpan="18" nzOffset="5" style="border: 1px palevioletred solid;">
+        <nz-tabset nzType="line">
+          <nz-tab nzTitle="秒">
+            <nz-form-item>
+              <nz-form-label nzSpan="4" nzRequired>选择类型</nz-form-label>
+              <nz-form-control nzSpan="12" nzOffset="1">
+                <nz-select formControlName="secondTypeSel"
+                           nzPlaceHolder="请选择" (ngModelChange)="secondSelChange($event)">
+                  <nz-option nzValue="1" nzLabel="每秒执行"></nz-option>
+                  <nz-option nzValue="2" nzLabel="周期从第几秒到第几秒"></nz-option>
+                  <nz-option nzValue="3" nzLabel="从某一秒开始，每多少秒执行一次"></nz-option>
+                  <nz-option nzValue="4" nzLabel="指定特定的秒数"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="jobtaskForm.get('secondTypeSel').dirty && jobtaskForm.get('secondTypeSel').errors">
+                  <ng-container *ngIf="jobtaskForm.get('secondTypeSel').errors['required']">
+                    请选择类型
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="secondShowFlag2">
+              <nz-form-label nzSpan="3" nzRequired>周期从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="0" nzMax="58" formControlName="secondBetweenVal1" (ngModelChange)="secondBetweenVal1Change()"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('secondBetweenVal1').dirty && jobtaskForm.get('secondBetweenVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('secondBetweenVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">秒--</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="59" formControlName="secondBetweenVal2" ></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('secondBetweenVal2').dirty && jobtaskForm.get('secondBetweenVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('secondBetweenVal2').errors['error']">
+                    不能比前一个数还大
+                  </ng-container>
+                  <ng-container *ngIf="jobtaskForm.get('secondBetweenVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">秒</nz-form-label>
+            </nz-form-item>
+            <nz-form-item *ngIf="secondShowFlag3">
+              <nz-form-label nzSpan="3" nzRequired>从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="0" nzMax="59" formControlName="secondStepVal1"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('secondStepVal1').dirty && jobtaskForm.get('secondStepVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('secondStepVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">秒开始，每</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="59" formControlName="secondStepVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('secondStepVal2').dirty && jobtaskForm.get('secondStepVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('secondStepVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">秒执行一次</nz-form-label>
+            </nz-form-item>
+            <div *ngIf="secondShowFlag4">
+              <nz-form-item *ngFor="let array of arrays; let i = index;" >
+                <nz-form-control nzSpan="22" nzOffset="1" >
+                  <nz-checkbox-group [ngModel]="arrays[i]" [formControlName]="'secondVals'+i"></nz-checkbox-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+
+          </nz-tab>
+          <nz-tab nzTitle="分钟">
+            <nz-form-item>
+              <nz-form-label nzSpan="4" nzRequired>选择类型</nz-form-label>
+              <nz-form-control nzSpan="12" nzOffset="1">
+                <nz-select formControlName="minuteTypeSel"
+                           nzPlaceHolder="请选择" (ngModelChange)="minuteSelChange($event)">
+                  <nz-option nzValue="1" nzLabel="每分钟执行"></nz-option>
+                  <nz-option nzValue="2" nzLabel="周期从第几分钟到第几钟"></nz-option>
+                  <nz-option nzValue="3" nzLabel="从某一分钟开始，每多少分钟执行一次"></nz-option>
+                  <nz-option nzValue="4" nzLabel="指定特定的分钟数"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="jobtaskForm.get('minuteTypeSel').dirty && jobtaskForm.get('minuteTypeSel').errors">
+                  <ng-container *ngIf="jobtaskForm.get('minuteTypeSel').errors['required']">
+                    请选择类型
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="minuteShowFlag2">
+              <nz-form-label nzSpan="3" nzRequired>周期从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="0" nzMax="58" formControlName="minuteBetweenVal1" (ngModelChange)="minuteBetweenVal1Change()"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('minuteBetweenVal1').dirty && jobtaskForm.get('minuteBetweenVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('minuteBetweenVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="2">分钟--</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="59" formControlName="minuteBetweenVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('minuteBetweenVal2').dirty && jobtaskForm.get('minuteBetweenVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('minuteBetweenVal2').errors['error']">
+                    不能比前一个数还大
+                  </ng-container>
+                  <ng-container *ngIf="jobtaskForm.get('minuteBetweenVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="2">分钟</nz-form-label>
+            </nz-form-item>
+            <nz-form-item *ngIf="minuteShowFlag3">
+              <nz-form-label nzSpan="3" nzRequired>从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="0" nzMax="59" formControlName="minuteStepVal1"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('minuteStepVal1').dirty && jobtaskForm.get('minuteStepVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('minuteStepVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="4">分钟开始，每</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="59" formControlName="minuteStepVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('minuteStepVal2').dirty && jobtaskForm.get('minuteStepVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('minuteStepVal2').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="4">分钟执行一次</nz-form-label>
+            </nz-form-item>
+            <div *ngIf="minuteShowFlag4">
+              <nz-form-item *ngFor="let array of arrays; let i = index;" >
+                <nz-form-control nzSpan="22" nzOffset="1" >
+                  <nz-checkbox-group [ngModel]="arrays[i]" [formControlName]="'minuteVals'+i"></nz-checkbox-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="小时">
+            <nz-form-item>
+              <nz-form-label nzSpan="4" nzRequired>选择类型</nz-form-label>
+              <nz-form-control nzSpan="12" nzOffset="1">
+                <nz-select formControlName="hourTypeSel"
+                           nzPlaceHolder="请选择" (ngModelChange)="hourSelChange($event)">
+                  <nz-option nzValue="1" nzLabel="每小时执行"></nz-option>
+                  <nz-option nzValue="2" nzLabel="周期从第几小时到第几小时"></nz-option>
+                  <nz-option nzValue="3" nzLabel="从某一小时开始，每多少小时执行一次"></nz-option>
+                  <nz-option nzValue="4" nzLabel="指定特定的小时数"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="jobtaskForm.get('hourTypeSel').dirty && jobtaskForm.get('hourTypeSel').errors">
+                  <ng-container *ngIf="jobtaskForm.get('hourTypeSel').errors['required']">
+                    请选择类型
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="hourShowFlag2">
+              <nz-form-label nzSpan="3" nzRequired>周期从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="0" nzMax="22" formControlName="hourBetweenVal1" (ngModelChange)="hourBetweenVal1Change()"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('hourBetweenVal1').dirty && jobtaskForm.get('hourBetweenVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('hourBetweenVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="2">小时--</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="23" formControlName="hourBetweenVal2" ></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('hourBetweenVal2').dirty && jobtaskForm.get('hourBetweenVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('hourBetweenVal2').errors['error']">
+                    不能比前一个数还大
+                  </ng-container>
+                  <ng-container *ngIf="jobtaskForm.get('hourBetweenVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="2">小时</nz-form-label>
+            </nz-form-item>
+            <nz-form-item *ngIf="hourShowFlag3">
+              <nz-form-label nzSpan="3" nzRequired>从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="0" nzMax="23" formControlName="hourStepVal1"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('hourStepVal1').dirty && jobtaskForm.get('hourStepVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('hourStepVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="4">小时开始，每</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="23" formControlName="hourStepVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('hourStepVal2').dirty && jobtaskForm.get('hourStepVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('hourStepVal2').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="4">小时执行一次</nz-form-label>
+            </nz-form-item>
+            <div *ngIf="hourShowFlag4">
+              <nz-form-item *ngFor="let array of arrays1; let i = index;" >
+                <nz-form-control nzSpan="22" nzOffset="1" >
+                  <nz-checkbox-group [ngModel]="arrays1[i]" [formControlName]="'hourVals'+i"></nz-checkbox-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="日" [nzDisabled]="">
+            <nz-form-item>
+              <nz-form-label nzSpan="4" nzRequired>选择类型</nz-form-label>
+              <nz-form-control nzSpan="12" nzOffset="1">
+                <nz-select formControlName="dayTypeSel"
+                           nzPlaceHolder="请选择" (ngModelChange)="daySelChange($event)">
+                  <nz-option nzValue="1" nzLabel="不指定"></nz-option>
+                  <nz-option nzValue="2" nzLabel="每天执行"></nz-option>
+                  <nz-option nzValue="3" nzLabel="周期从第几天到第几天"></nz-option>
+                  <nz-option nzValue="4" nzLabel="从某一天开始，每多少天执行一次"></nz-option>
+                  <nz-option nzValue="5" nzLabel="每月几号最近的那个工作日"></nz-option>
+                  <nz-option nzValue="6" nzLabel="每月最后一天"></nz-option>
+                  <nz-option nzValue="7" nzLabel="指定特定的天数"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="jobtaskForm.get('dayTypeSel').dirty && jobtaskForm.get('dayTypeSel').errors">
+                  <ng-container *ngIf="jobtaskForm.get('dayTypeSel').errors['required']">
+                    请选择类型
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="dayShowFlag3">
+              <nz-form-label nzSpan="3" nzRequired>周期从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="30" formControlName="dayBetweenVal1" (ngModelChange)="dayBetweenVal1Change()"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('dayBetweenVal1').dirty && jobtaskForm.get('dayBetweenVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('dayBetweenVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">号--</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="2" nzMax="31" formControlName="dayBetweenVal2" ></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('dayBetweenVal2').dirty && jobtaskForm.get('dayBetweenVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('dayBetweenVal2').errors['error']">
+                    不能比前一个数还大
+                  </ng-container>
+                  <ng-container *ngIf="jobtaskForm.get('dayBetweenVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">号</nz-form-label>
+            </nz-form-item>
+            <nz-form-item *ngIf="dayShowFlag4">
+              <nz-form-label nzSpan="3" nzRequired>从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="31" formControlName="dayStepVal1"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('dayStepVal1').dirty && jobtaskForm.get('dayStepVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('dayStepVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">号开始，每</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="31" formControlName="dayStepVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('dayStepVal2').dirty && jobtaskForm.get('dayStepVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('dayStepVal2').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">天执行一次</nz-form-label>
+            </nz-form-item>
+            <nz-form-item *ngIf="dayShowFlag5">
+              <nz-form-label nzSpan="3" nzRequired>每月</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="31" formControlName="dayWorkDayVal"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('dayWorkDayVal').dirty && jobtaskForm.get('dayWorkDayVal').errors">
+                  <ng-container *ngIf="jobtaskForm.get('dayWorkDayVal').errors['required']">
+                    请输入一个天数
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="5">号最近的那个工作日</nz-form-label>
+            </nz-form-item>
+           <div *ngIf="dayShowFlag7" >
+             <nz-form-item *ngFor="let array of arrays2; let i = index;" >
+               <nz-form-control nzSpan="23" nzOffset="1" >
+                 <nz-checkbox-group [ngModel]="arrays2[i]" [formControlName]="'dayVals'+i"></nz-checkbox-group>
+               </nz-form-control>
+             </nz-form-item>
+           </div>
+          </nz-tab>
+          <nz-tab nzTitle="月">
+            <nz-form-item>
+              <nz-form-label nzSpan="4" nzRequired>选择类型</nz-form-label>
+              <nz-form-control nzSpan="12" nzOffset="1">
+                <nz-select formControlName="monthTypeSel"
+                           nzPlaceHolder="请选择" (ngModelChange)="monthSelChange($event)">
+                  <nz-option nzValue="1" nzLabel="每月执行"></nz-option>
+                  <nz-option nzValue="2" nzLabel="周期从第几月到第几月"></nz-option>
+                  <nz-option nzValue="3" nzLabel="从某一个月开始，每多少个月执行一次"></nz-option>
+                  <nz-option nzValue="4" nzLabel="指定特定的月份数"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="jobtaskForm.get('monthTypeSel').dirty && jobtaskForm.get('monthTypeSel').errors">
+                  <ng-container *ngIf="jobtaskForm.get('monthTypeSel').errors['required']">
+                    请选择类型
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="monthShowFlag2">
+              <nz-form-label nzSpan="3" nzRequired>周期从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="11" formControlName="monthBetweenVal1" (ngModelChange)="monthBetweenVal1Change()"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('monthBetweenVal1').dirty && jobtaskForm.get('monthBetweenVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('monthBetweenVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">月--</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="2" nzMax="12" formControlName="monthBetweenVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('monthBetweenVal2').dirty && jobtaskForm.get('monthBetweenVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('monthBetweenVal2').errors['error']">
+                    不能比前一个数还大
+                  </ng-container>
+                  <ng-container *ngIf="jobtaskForm.get('monthBetweenVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">月</nz-form-label>
+            </nz-form-item>
+            <nz-form-item *ngIf="monthShowFlag3">
+              <nz-form-label nzSpan="3" nzRequired>从</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="12" formControlName="monthStepVal1"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('monthStepVal1').dirty && jobtaskForm.get('monthStepVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('monthStepVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">月开始，每</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="12" formControlName="monthStepVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('monthStepVal2').dirty && jobtaskForm.get('monthStepVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('monthStepVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">月执行一次</nz-form-label>
+            </nz-form-item>
+
+            <nz-form-item *ngIf="monthShowFlag4">
+              <nz-form-control nzSpan="22" nzOffset="1"  >
+                <nz-checkbox-group [ngModel]="arrays3" formControlName="monthVals1"></nz-checkbox-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="monthShowFlag4">
+              <nz-form-control nzSpan="22" nzOffset="1"  >
+                <nz-checkbox-group [ngModel]="arrays4" formControlName="monthVals2"></nz-checkbox-group>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-tab>
+          <nz-tab nzTitle="周" [nzDisabled]="">
+            <nz-form-item>
+              <nz-form-label nzSpan="4" nzRequired>选择类型</nz-form-label>
+              <nz-form-control nzSpan="12" nzOffset="1">
+                <nz-select formControlName="weekTypeSel"
+                           nzPlaceHolder="请选择" (ngModelChange)="weekSelChange($event)">
+                  <nz-option nzValue="1" nzLabel="不指定"></nz-option>
+                  <nz-option nzValue="2" nzLabel="每周执行"></nz-option>
+                  <nz-option nzValue="3" nzLabel="周期从周几到周几"></nz-option>
+                  <nz-option nzValue="4" nzLabel="一个月的第几周的星期几"></nz-option>
+                  <nz-option nzValue="5" nzLabel="一个月的最后一个星期几"></nz-option>
+                  <nz-option nzValue="6" nzLabel="指定特定的星期几"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="jobtaskForm.get('weekTypeSel').dirty && jobtaskForm.get('weekTypeSel').errors">
+                  <ng-container *ngIf="jobtaskForm.get('weekTypeSel').errors['required']">
+                    请选择类型
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="weekShowFlag3">
+              <nz-form-label nzSpan="4" nzRequired>周期从周</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="6" formControlName="weekBetweenVal1" (ngModelChange)="weekBetweenVal1Change()"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('weekBetweenVal1').dirty && jobtaskForm.get('weekBetweenVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('weekBetweenVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="1">--周</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="2" nzMax="7" formControlName="weekBetweenVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('weekBetweenVal2').dirty && jobtaskForm.get('weekBetweenVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('weekBetweenVal2').errors['error']">
+                    不能比前一个数还大
+                  </ng-container>
+                  <ng-container *ngIf="jobtaskForm.get('weekBetweenVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="weekShowFlag4">
+              <nz-form-label nzSpan="4" nzRequired>一个月的第</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="5" formControlName="weekMonthVal1"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('weekMonthVal1').dirty && jobtaskForm.get('weekMonthVal1').errors">
+                  <ng-container *ngIf="jobtaskForm.get('weekMonthVal1').errors['required']">
+                    请输入第一个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+              <nz-form-label nzSpan="3">周的星期</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="7" formControlName="weekMonthVal2"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('weekMonthVal2').dirty && jobtaskForm.get('weekMonthVal2').errors">
+                  <ng-container *ngIf="jobtaskForm.get('weekMonthVal2').errors['required']">
+                    请输入第二个数字
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="weekShowFlag5">
+              <nz-form-label nzSpan="7" nzRequired >一个月的最后一个星期</nz-form-label>
+              <nz-form-control nzSpan="4">
+                <nz-input-number nzMin="1" nzMax="5" formControlName="weekMonthLastVal"></nz-input-number>
+                <nz-form-explain *ngIf="jobtaskForm.get('weekMonthLastVal').dirty && jobtaskForm.get('weekMonthLastVal').errors">
+                  <ng-container *ngIf="jobtaskForm.get('weekMonthLastVal').errors['required']">
+                    请输入第一个星期数
+                  </ng-container>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="weekShowFlag6">
+              <nz-form-control nzSpan="22" nzOffset="1"  >
+                <nz-checkbox-group [ngModel]="arrays5" formControlName="weekVals"></nz-checkbox-group>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-tab>
+        </nz-tabset>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <nz-form-item *ngIf="triggerDescriptionShowFlag">
+    <nz-form-label  nzSpan="4" nzRequired>触发器描述</nz-form-label>
+    <nz-form-control nzSpan="18" nzOffset="1">
+      <input nz-input formControlName="triggerDescription" />
+      <nz-form-explain *ngIf="jobtaskForm.get('triggerDescription').dirty && jobtaskForm.get('triggerDescription').errors">
+        <ng-container *ngIf="jobtaskForm.get('triggerDescription').errors['required']">
+          请输入触发器描述
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="commonConfigDivShowFlag || cronConfigDivShowFlag">
+    <nz-form-label nzSpan="4">持续时间</nz-form-label>
+    <nz-form-label nzSpan="3" nzRequired>开始时间</nz-form-label>
+    <nz-form-control nzSpan="3">
+      <nz-date-picker formControlName="startDate"></nz-date-picker>
+      <nz-form-explain *ngIf="jobtaskForm.get('startDate').dirty && jobtaskForm.get('startDate').errors">
+        <ng-container *ngIf="jobtaskForm.get('startDate').errors['required']">
+          请输入开始日期
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+    <nz-form-control nzSpan="3">
+      <nz-time-picker formControlName="startTime"></nz-time-picker>
+      <nz-form-explain *ngIf="jobtaskForm.get('startTime').dirty && jobtaskForm.get('startTime').errors">
+        <ng-container *ngIf="jobtaskForm.get('startTime').errors['required']">
+          请输入开始时间
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+    <nz-form-label nzOffset="1" nzSpan="2" [nzRequired]="this.jobtaskForm.get('hasEndTime').value">结束时间</nz-form-label>
+    <nz-form-control nzSpan="2">
+      <nz-switch formControlName="hasEndTime" nzCheckedChildren="有" nzUnCheckedChildren="没有"
+                 (ngModelChange)="hasEndTimeChange()">
+
+      </nz-switch>
+    </nz-form-control>
+    <nz-form-control nzSpan="3" *ngIf="endTimeShowFlag">
+      <nz-date-picker formControlName="endDate"></nz-date-picker>
+      <nz-form-explain *ngIf="jobtaskForm.get('endDate').dirty && jobtaskForm.get('endDate').errors">
+        <ng-container *ngIf="jobtaskForm.get('endDate').errors['required']">
+          请输入结束日期
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+
+    <nz-form-control nzSpan="3" *ngIf="endTimeShowFlag">
+      <nz-time-picker formControlName="endTime"></nz-time-picker>
+      <nz-form-explain *ngIf="jobtaskForm.get('endTime').dirty && jobtaskForm.get('endTime').errors">
+        <ng-container *ngIf="jobtaskForm.get('endTime').errors['required']">
+          请输入结束时间
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item id="taskData">
+    <nz-form-label nzSpan="4">任务参数</nz-form-label>
+    <nz-form-label nzSpan="1" nzOffset="1">键</nz-form-label>
+    <nz-form-control nzSpan="4">
+      <input nz-input formControlName="dataKey"/>
+    </nz-form-control>
+    <nz-form-label nzSpan="1" nzOffset="1">值</nz-form-label>
+    <nz-form-control nzSpan="8">
+      <input nz-input formControlName="dataValue"/>
+    </nz-form-control>
+    <nz-form-control nzSpan="2" nzOffset="1">
+      <button nz-button nzType="primary" (click)="addRow($event)">新增参数</button>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngFor="let dataKey of dataKeys">
+    <nz-form-label nzSpan="1" nzOffset="5">键</nz-form-label>
+    <nz-form-control nzSpan="4">
+      <input nz-input [formControlName]="dataKey.name"/>
+    </nz-form-control>
+    <nz-form-label nzSpan="1" nzOffset="1">值</nz-form-label>
+    <nz-form-control nzSpan="8">
+      <input nz-input [formControlName]="dataValues[dataKey.id].name"/>
+    </nz-form-control>
+    <nz-form-control *ngIf="dataKey.id == dataKeys.length-1" nzOffset="1" nzSpan="2">
+      <button nz-button nzType="primary" (click)="removeRow($event)">删除参数</button>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item></nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzOffset="9" nzSpan="2">
+      <button nz-button nzType="primary" (click)="reset($event)">重置</button>
+    </nz-form-control>
+    <nz-form-control nzOffset="1" nzSpan="2">
+      <button nz-button nzType="primary">提交</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
